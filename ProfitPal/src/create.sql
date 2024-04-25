@@ -15,3 +15,9 @@ CREATE TABLE ProfitPal.BudgetItems (
     spending DECIMAL(10, 2) NOT NULL,
     PRIMARY KEY (username, category)
 );
+
+INSERT INTO ProfitPal.Users (username, password, email) VALUES ('test', 'test', 'test@gmail.com');
+INSERT INTO ProfitPal.BudgetItems (username, category, spending) VALUES ('test', 'Grocery', 100.00);
+INSERT INTO ProfitPal.BudgetItems (username, category, spending) VALUES ('test', 'Gas', 1000.00);
+INSERT INTO ProfitPal.BudgetItems (username, category, spending) VALUES ('test', 'Other', 900.00);
+INSERT INTO ProfitPal.BudgetItems (username, category, spending) VALUES ('test', 'Entertainment', 10.00);

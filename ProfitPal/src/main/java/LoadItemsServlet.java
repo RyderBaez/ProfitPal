@@ -1,4 +1,3 @@
-import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.JsonObject;
 
 @WebServlet("/LoadItemsServlet")
 
@@ -28,13 +29,13 @@ public class LoadItemsServlet extends HttpServlet {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/Assignment4?user=root&password=root");
-            String query = "SELECT item, price FROM items WHERE username = ?";
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/profitpal?user=root&password=root");
+            String query = "SELECT category, spending FROM BudgetItems WHERE username = ?";
             ps = conn.prepareStatement(query);
             ps.setString(1, username);
             rs = ps.executeQuery();
             while(rs.next()){
-                responseJson.addProperty(rs.getString("item"), rs.getDouble("price"));
+                responseJson.addProperty(rs.getString("category"), rs.getDouble("spending"));
             }
             response.getWriter().write(responseJson.toString());
         } catch (Exception e) {
