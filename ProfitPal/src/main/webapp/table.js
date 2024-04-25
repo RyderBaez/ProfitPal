@@ -6,11 +6,13 @@ window.onload = function() {
     xhr.setRequestHeader('Content-Type', 'application/json');
     xhr.onload = function(){
         if(this.status == 200){
+            console.log(this.responseText);
             response = JSON.parse(this.responseText);
             console.log(response);
-            for(let i = 0; i < response.length; i++){
-                container = document.getElementById(response[i].item + 'Spending');
-                containter.value = response[i].value;
+            for(let category in response){
+                catString = category.toString();
+                container = document.getElementById(catString + 'Spending');
+                container.value = response[category];
             }
         }
     }

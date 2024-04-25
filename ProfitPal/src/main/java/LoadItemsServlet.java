@@ -20,6 +20,7 @@ public class LoadItemsServlet extends HttpServlet {
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
+        username = "test";
         response.setContentType("json/application");
 
         JsonObject responseJson = new JsonObject();
@@ -35,6 +36,7 @@ public class LoadItemsServlet extends HttpServlet {
             ps.setString(1, username);
             rs = ps.executeQuery();
             while(rs.next()){
+                System.out.println(rs.getString("category") + " " + rs.getDouble("spending"));
                 responseJson.addProperty(rs.getString("category"), rs.getDouble("spending"));
             }
             response.getWriter().write(responseJson.toString());
@@ -57,6 +59,5 @@ public class LoadItemsServlet extends HttpServlet {
                 e.printStackTrace();
             }
         }
-        response.getWriter().write(responseJson.toString());
     }
 }
