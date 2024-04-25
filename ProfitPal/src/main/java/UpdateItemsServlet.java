@@ -1,3 +1,16 @@
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @WebServlet("/UpdateItemsServlet")
 public class UpdateItemsServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -45,4 +58,5 @@ public class UpdateItemsServlet extends HttpServlet {
         String[] prices = request.getParameterValues("prices");
 
         UpdateItems(username, items, prices);
+    }
 }
