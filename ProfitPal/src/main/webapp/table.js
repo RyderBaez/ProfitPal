@@ -18,3 +18,7 @@ window.onload = function() {
     }
     xhr.send();
 }
+
+updateAndCalculate = function(){
+
+}
