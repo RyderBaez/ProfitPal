@@ -39,10 +39,10 @@ function updateAndCalculate(button) {
             parentDiv.querySelector("td.shoppingMonetaryReduction").innerHTML = "$" + json.monetaryShoppingReduction;
             parentDiv.querySelector("td.gasMonetaryReduction").innerHTML = "$" + json.monetaryGasReduction;
             
-            parentDiv.querySelector("td.groceryPercentReduction").innerHTML = "%" + json.groceryChange;
-            parentDiv.querySelector("td.restaurantPercentReduction").innerHTML = "%" + json.restaurantChange;
-            parentDiv.querySelector("td.shoppingPercentReduction").innerHTML = "%" + json.shoppingChange;
-            parentDiv.querySelector("td.gasPercentReduction").innerHTML = "%" + json.gasChange;
+            parentDiv.querySelector("td.groceryPercentReduction").innerHTML = json.groceryChange + "%";
+            parentDiv.querySelector("td.restaurantPercentReduction").innerHTML =  json.restaurantChange + "%";
+            parentDiv.querySelector("td.shoppingPercentReduction").innerHTML =  json.shoppingChange + "%";
+            parentDiv.querySelector("td.gasPercentReduction").innerHTML =  json.gasChange + "%";
         }
     }
     
@@ -57,4 +57,19 @@ function updateAndCalculate(button) {
 
     xhr.send(data);
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+	const homeButton = document.getElementById("homeButton");
+	const guestViewButton = document.getElementById("guestViewButton");
+	const logoutButton = document.getElementById("logoutButton");
+	homeButton.addEventListener("click", function(){
+		window.location.href = "home.html";
+	});
+	logoutButton.addEventListener("click", function(){
+		// Perform logout functionality (update local storage/cookie)
+		window.location.href = "home.html";
+	});
+})
+
+
 
