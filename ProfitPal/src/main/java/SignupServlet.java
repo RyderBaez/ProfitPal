@@ -16,6 +16,46 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/SignupServlet")
 public class SignupServlet extends HttpServlet{
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		PrintWriter pw = response.getWriter();
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		
+		User user = new Gson.fromJson(request.getReader(), User.class);
+		
+		String username = user.username;
+		String password = user.password;
+		String email = user.email;
+		int balance = user.balance;
+		
+		Gson gson = new Gson();
+		
+		if(username == null || username.isBlank() || password == null || password.isBlank() || email == null || email.isBlank()) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			String error = "User info missing";
+			pw.write(gson.toJson(error));
+			pw.flush();
+		}
+		
+		int userID = JDBCConnector.registerUser(username, password, email);
+		
+		if(userID == -1) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			String error = "Username is taken";
+			pw.write(gson.toJson(error));
+			pw.flush();
+		}else if(userID == -2) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+			String error = "Email is already registered";
+			pw.write(gson.toJson(error));
+			pw.flush();
+		} else {
+			response.setStatus(HttpServletResponse.SC_OK);
+			pw.write(gson.toJson(error));
+			pw.flush();
+		}
+		
+	}
 	public static int registerUser(String username, String password, String email) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
