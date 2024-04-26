@@ -4,10 +4,16 @@ body {
 }
 
 table {
-  width: 100%;
+  display: flex;
+  justify-content: center; /* Centers horizontally in the flex container */
+  align-items: center; /* Centers vertically in the flex container */
   border-collapse: collapse;
-  text-align: left;
+  text-align: center;
   margin-top: 20px;
+  padding: 20px; /* Spacing inside the box */
+  margin: 20px 0; /* Spacing outside the box */
+  width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 th, td {
@@ -26,4 +32,67 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: #f1f1f1;
+}
+
+  .header-container {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+.header {
+    display: flex;
+    justify-content: center; /* Centers horizontally in the flex container */
+    align-items: center; /* Centers vertically in the flex container */
+    background-color: #f9a1a1;
+    border-radius: 25px; /* Rounded corners */
+    padding: 20px; /* Spacing inside the box */
+    margin: 20px 0; /* Spacing outside the box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A subtle shadow */
+    width: 400px;
+}
+
+.header h1 {
+  margin: 0; /* Removes default margin from h1 */
+  font-size: 32px; /* Adjust size as necessary */
+  color: #000; /* Adjust color as necessary */
+  text-align: center;
+}
+
+.button-group {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.button {
+    padding: 15px 30px;
+    margin: 0 40px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+}
+
+.button:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.home { 
+    background-color: #C9EFBB; 
+}
+.guest-view { 
+    background-color: #C9EFBB;
+    font-size: 20px;
+    padding: 20px 40px;
+}
+.logout { 
+    background-color: #C9EFBB; 
+}
+.submit{
+    background-color: #7BADF9; 
 }
