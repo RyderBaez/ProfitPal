@@ -4,41 +4,45 @@
 <head>
     <title>Table</title>
     <script src="table.js"></script>
+	<link rel="stylesheet" href="table.css">
 </head>
 <body>
     <h1>Table</h1>
-    <table>
-        <tr>
-            <th>Category</th>
-            <th>Spending</th>
-            <th>$ Reduction</th>
-            <th>% Reduction</th>
-        </tr>
-        <tr>
-            <td>Grocery</td>
-            <td><input type="text" id="GrocerySpending" value="0"></td>
-            <td id="GroceryReduction"></td>
-            <td id="GroceryPercent"></td>
-        </tr>
-        <tr>
-            <td>Gas</td>
-            <td><input type="text" id="GasSpending" value="0"></td>
-            <td id="GasReduction"></td>
-            <td id="GasPercent"></td>
-        </tr>
-        <tr>
-            <td>Entertainment</td>
-            <td><input type="text" id="EntertainmentSpending" value="0"></td>
-            <td id="EntertainmentReduction"></td>
-            <td id="EntertainmentPercent"></td>
-        </tr>
-        <tr>
-            <td>Other</td>
-            <td><input type="text" id="OtherSpending" value="0"></td>
-            <td id="OtherReduction"></td>
-            <td id="OtherPercent"></td>
-        </tr>
-    </table>
-    <button onClick="updateAndCalculate()">Calculate</button>
+    <div>
+    	<table class="table">
+		  <tr>
+		    <th>Category</th>
+		    <th>Spending</th>
+		    <th>$ Reduction</th>
+		    <th>% Reduction</th>
+		  </tr>
+		  <tr>
+		    <td class="grocery">Grocery</td>
+		    <td><input type="text" value="$389.33" class="groceryInput"></td>
+		    <td class="groceryMonetaryReduction">temp</td>
+		    <td class="groceryPercentReduction">temp</td>
+		  </tr>
+		  <tr>
+		    <td class="restaurant">Restaurant</td>
+		    <td><input type="text" value="$95.39" class="restaurantInput"></td>
+		    <td class="restaurantMonetaryReduction">temp</td>
+		    <td class="restaurantPercentReduction">temp</td>
+		  </tr>
+		  <tr>
+		    <td class="shopping">Shopping</td>
+		    <td><input type="text" value="$625.49" class="shoppingInput"></td>
+		    <td class="shoppingMonetaryReduction">temp</td>
+		    <td class="shoppingPercentReduction">temp</td>
+		  </tr>
+		  <tr>
+		    <td class="gas">Gas</td>
+		    <td><input type="text" value="$33.50" class="gasInput"></td>
+		    <td class="gasMonetaryReduction">temp</td>
+		    <td class="gasPercentReduction">temp</td>
+		  </tr>
+		</table>
+	    <button onClick="updateAndCalculate(this)">Calculate</button>	    
+    </div>
+        
 </body>
 </html>
