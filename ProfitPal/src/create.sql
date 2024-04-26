@@ -2,12 +2,14 @@ DROP DATABASE if exists ProfitPal;
 
 CREATE DATABASE ProfitPal;
 
-CREATE TABLE ProfitPal.Users (
-    username VARCHAR(45) NOT NULL,
-    password VARCHAR(45) NOT NULL,
-    email VARCHAR(45) NOT NULL,
-    PRIMARY KEY (username)
-);
+CREATE TABLE `201project`.`ProfitPal.Users` (
+  `email` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`email`));
+  ADD COLUMN `userID` INT NOT NULL AUTO_INCREMENT FIRST,
+  DROP PRIMARY KEY,
+  ADD PRIMARY KEY (`userID`);
+
 
 CREATE TABLE ProfitPal.BudgetItems (
     username VARCHAR(45) NOT NULL,
