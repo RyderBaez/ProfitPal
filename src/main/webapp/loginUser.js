@@ -37,4 +37,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		};
 		xhr.send(params);
     })
+    
+    registerSubmitButton.addEventLister("click", function()){
+		
+	}
 });
