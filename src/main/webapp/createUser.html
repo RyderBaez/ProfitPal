@@ -118,8 +118,15 @@ h1{
             </div> <!-- .form-group -->
             
             <div class="row mb-2">
-                <div class="col-sm-4 offset-sm-2">
-                    <small class="form-text text-muted">Acceptable formats: 123 456 7890, 123-456-7890</small>
+                <div class="col-sm-12">
+                    <small class="form-text text-muted">
+                        <ul>Password must contain at least one of each:
+                            <li>Uppercase character</li>
+                            <li>Lowercase character</li>	
+                            <li>Digit</li>
+                            <li>Special character !, @, #, $, %, ^, &, or *</li>	
+                        </ul>
+                    </small>
                 </div>
             </div> <!-- .row -->
         </form>
@@ -128,6 +135,6 @@ h1{
         <p>ProfitPal Copyright 2024</p>
       </div>
 </body>
-<script src="formValidation.js"></script>
+<!-- Only JS needed for createUser.html -->
 <script src="createUser.js"></script>
 </html>
