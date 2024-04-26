@@ -22,16 +22,12 @@ public class SignupServlet extends HttpServlet{
 		PrintWriter pw = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		
-		User user = new Gson.fromJson(request.getReader(), User.class);
-		
+
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
 		String firstName = request.getParameter("firstName");
 		String lastName = request.getParameter("lastName");
 	
-		int balance = user.balance;
-		
 		Gson gson = new Gson();
 		
 		if(password == null || password.isBlank() || email == null || email.isBlank() || firstName == null || firstName.isBlank() || lastName == null || lastName.isBlank()) {
@@ -60,7 +56,7 @@ public class SignupServlet extends HttpServlet{
 		}
 		
 	}
-	public static int registerUser(String password, String email) {
+	public static int registerUser(String password, String email) throws UnsupportedEncodingException {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		}catch(ClassNotFoundException e) {
