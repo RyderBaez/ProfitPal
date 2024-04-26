@@ -96,3 +96,10 @@ tr:hover {
 .submit{
     background-color: #7BADF9; 
 }
+
+.calcButton{
+	margin-bottom: 20px;
+	align-items: center; /* Centers vertically in the flex container */
+    background-color: pink; 
+    margin-left: 45%;
+}
