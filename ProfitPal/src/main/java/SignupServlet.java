@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 @WebServlet("/SignupServlet")
 public class SignupServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -23,21 +25,23 @@ public class SignupServlet extends HttpServlet{
 		
 		User user = new Gson.fromJson(request.getReader(), User.class);
 		
-		String username = user.username;
-		String password = user.password;
-		String email = user.email;
+		String password = request.getParameter("password");
+		String email = request.getParameter("email");
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+	
 		int balance = user.balance;
 		
 		Gson gson = new Gson();
 		
-		if(username == null || username.isBlank() || password == null || password.isBlank() || email == null || email.isBlank()) {
+		if(password == null || password.isBlank() || email == null || email.isBlank() || firstName == null || firstName.isBlank() || lastName == null || lastName.isBlank()) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			String error = "User info missing";
 			pw.write(gson.toJson(error));
 			pw.flush();
 		}
 		
-		int userID = JDBCConnector.registerUser(username, password, email);
+		int userID = registerUser(password, email);
 		
 		if(userID == -1) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -51,12 +55,12 @@ public class SignupServlet extends HttpServlet{
 			pw.flush();
 		} else {
 			response.setStatus(HttpServletResponse.SC_OK);
-			pw.write(gson.toJson(error));
+			pw.write("User successfully registered");
 			pw.flush();
 		}
 		
 	}
-	public static int registerUser(String username, String password, String email) {
+	public static int registerUser(String password, String email) {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		}catch(ClassNotFoundException e) {
@@ -70,13 +74,17 @@ public class SignupServlet extends HttpServlet{
 		int userID = -1;
 		
 		try {
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/ass4?user=rot&password=Test@12345");
+			//TODO: change this to your SQL password when testing
+			String encodedPassword = URLEncoder.encode("nR81&U1P1v}E", "UTF-8");
+			String url = "jdbc:mysql://localhost/homework4?user=root&password=" + encodedPassword;
+			conn = DriverManager.getConnection(url);
+			
 			st = conn.createStatement();
 			rs = st.executeQuery("SELECT * FROM users WHERE email='" + email + "'");
 			if(!rs.next()) {
 				//no user with that email either
 				rs.close();
-				st.execute("INSERT INTO users(username, pass, email, balance) VALUES ('" + username + "', '" + password + "', '" + email + "', 50000)");
+				st.execute("INSERT INTO users(pass, email) VALUES ('" + password + "', '" + email + "'");
 				rs = st.executeQuery("SELECT LAST_INSERT_ID()");
 				rs.next();
 				userID = rs.getInt(1);
