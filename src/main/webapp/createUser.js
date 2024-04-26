@@ -18,14 +18,13 @@ document.addEventListener("DOMContentLoaded", function(){
     loginButton.addEventListener("click", function(){
         window.location.href = "loginUser.html";
     });
-	submitButton.addEventLister("click", function() {
+	submitButton.addEventListener("click", function() {
 		var xhr = new XMLHttpRequest();
 		var url = "SignupServlet";
 		var encodeEmail = encodeURIComponent(email.value);
 		var encodePassword = encodeURIComponent(password.value);
 		var encodePasswordRepeat = encodeURIComponent(passwordRepeat.value);
 		var encodeFname = encodeURIComponent(firstName.value);
-		
 		var encodeLname = encodeURIComponent(lastName.value);
 		var params = "email=" + encodeEmail + "&password=" + encodePassword + "&firstName=" + encodeFname + "&lastName=" + encodeLname
 		 + "&passwordRepeat=" + encodePasswordRepeat;
