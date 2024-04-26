@@ -20,6 +20,10 @@ body {
     justify-content: space-between;
     
   }
+  
+.no-underline {
+    text-decoration: none;
+}
 
   .test-container .card{
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -42,7 +46,7 @@ body {
   }
   .header {
     text-align: center;
-    margin: 20px;
+    margin: 20px 0;
   }
 
 

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProfitPal Login</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<style>
+#rules{
+    font-size: 0.8em;
+}
+#signup{
+    text-align: center;
+    justify-content: center;
+}
+h1{
+    font-weight: bold;
+}
+.no-underline {
+    text-decoration: none;
+}
+h1:hover {
+  text-decoration: none;
+}
+
+</style>
+<body>
+    <div class="header-container">
+        <a href="home.html" class="no-underline">
+            <div class="header">
+                <h1>ProfitPal</h1>
+            </div>
+        </a>
+    </div> 
+    
+    <div class="button-group">
+    <button class="button login">Login</button>
+    <button class="button new-user">New User</button>
+    </div>
+
+    <div id="signup" class="col-12 container">
+        <!-- F1 - Note:When a user submits a form we must use the id from the entire form 
+            and not speicifcly the button that says submit -->
+        <form id="signup-form">
+
+            <!-- Email Title and Text Field -->
+            <div class="form-group row">
+                <!-- kw: for="email" used to linking the input text field and title together when selected -->
+                <label for="email" class="col-sm-3 col-form-label">Email:<small class="text-danger">*</small></label>
+                <div class="col-sm-8">
+                    <!-- Use kw: `placeholder=""` to set the example for user -->
+                    <input type="text" name="email" class="form-control" placeholder="ttrojan@usc.edu" id="email">
+
+                     <!-- E1 - Note: Tag that displays the email errors checked in JS -->
+                    <small id="email-error" class="form-text text-danger"></small>
+
+                </div>
+            </div> <!-- .form-group -->
+            
+            <!-- Password Title and Text Field -->
+            <div class="form-group row">
+                <label for="password" class="col-sm-3 col-form-label">Password:<small class="text-danger">*</small></label>
+                <div class="col-sm-8">
+                    <input type="text" id="password" name="password" class="form-control" placeholder="GoTrojans24!">
+
+                    <small id="password-error" class="form-text text-danger"></small>
+                </div>
+            </div> <!-- .form-group -->
+
+            <div class="form-group row">
+                <label for="password-repeat" class="col-sm-3 col-form-label">Repeat Password:<small class="text-danger">*</small></label>
+                <div class="col-sm-8">
+                    <input type="text" id="password-repeat" name="password-repeat" class="form-control" placeholder="GoTrojans24!">
+                    <small id="password-error-2" class="form-text text-danger"></small>
+                </div>
+            </div> <!-- .form-group -->
+
+
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <button type="submit" class="button submit">Submit</button>
+                </div> <!-- .col -->
+            </div> <!-- .form-group -->
+
+            <!-- Display Info If Successful -->
+            <div class="form-group row">
+                <div class="col-sm-8">
+                    <div id ="userInfo">
+
+                    </div>
+                </div>
+            </div> <!-- .form-group -->
+            
+            <div class="row mb-2">
+                <div class="col-sm-4 offset-sm-2">
+                    <small class="form-text text-muted">Acceptable formats: 123 456 7890, 123-456-7890</small>
+                </div>
+            </div> <!-- .row -->
+        </form>
+    </div> <!-- .col -->
+    <div class="footer">
+        <p>ProfitPal Copyright 2024</p>
+      </div>
+</body>
+<script src="formValidation.js"></script>
+</html>

@@ -4,38 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ProfitPal Login</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
 <style>
 #rules{
-	font-size: 0.8em;
-}
-#userInfo{
-	text-align: center;
-}
-#userInfoList{
-	font-size: 1.1em;
-	display: inline-block;
-  	text-align: left;
-}
-#userInfoList > li + ul > li{
-	font-size: 0.9em;
-	font-style: italic;
+    font-size: 0.8em;
 }
 #signup{
     text-align: center;
     justify-content: center;
 }
-
-
+h1{
+    font-weight: bold;
+}
+.no-underline {
+    text-decoration: none;
+}
 </style>
-
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
 <body>
     <div class="header-container">
-        <div class="header">
-            <h1>ProfitPal</h1>
-        </div>
+        <a href="home.html" class="no-underline">
+            <div class="header">
+                <h1>ProfitPal</h1>
+            </div>
+        </a>
     </div> 
     
     <div class="button-group">
@@ -94,7 +87,7 @@
             <div class="form-group row">
                 <label for="password" class="col-sm-3 col-form-label">Password:<small class="text-danger">*</small></label>
                 <div class="col-sm-8">
-                    <input type="text" name="password" class="form-control" placeholder="GoTrojans24!" id="password">
+                    <input type="text" id="password" name="password" class="form-control" placeholder="GoTrojans24!">
 
                     <small id="password-error" class="form-text text-danger"></small>
                 </div>
@@ -103,9 +96,8 @@
             <div class="form-group row">
                 <label for="password-repeat" class="col-sm-3 col-form-label">Repeat Password:<small class="text-danger">*</small></label>
                 <div class="col-sm-8">
-                    <input type="text" name="password-repeat" class="form-control" placeholder="GoTrojans24!" id="password">
-
-                    <small id="password-error" class="form-text text-danger"></small>
+                    <input type="text" id="password-repeat" name="password-repeat" class="form-control" placeholder="GoTrojans24!">
+                    <small id="password-error-2" class="form-text text-danger"></small>
                 </div>
             </div> <!-- .form-group -->
 
