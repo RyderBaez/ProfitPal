@@ -17,8 +17,44 @@ window.onload = function() {
         }
     }
     xhr.send();
+} 
+
+function updateAndCalculate(button) {
+	 var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'ReductionServlet', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function(){
+        if(this.status == 200){
+			json = JSON.parse(this.responseText);
+            let parentDiv = button.parentElement;
+            console.log(json);
+            
+            parentDiv.querySelector("input.groceryInput").value = "$" + json.budget.grocery;
+            parentDiv.querySelector("input.restaurantInput").value = "$" + json.budget.restaurant;
+            parentDiv.querySelector("input.shoppingInput").value = "$" + json.budget.shopping;
+            parentDiv.querySelector("input.gasInput").value = "$" + json.budget.gas;
+            
+            parentDiv.querySelector("td.groceryMonetaryReduction").innerHTML = "$" + json.monetaryGroceryReduction;
+            parentDiv.querySelector("td.restaurantMonetaryReduction").innerHTML = "$" + json.monetaryRestaurantReduction;
+            parentDiv.querySelector("td.shoppingMonetaryReduction").innerHTML = "$" + json.monetaryShoppingReduction;
+            parentDiv.querySelector("td.gasMonetaryReduction").innerHTML = "$" + json.monetaryGasReduction;
+            
+            parentDiv.querySelector("td.groceryPercentReduction").innerHTML = "%" + json.groceryChange;
+            parentDiv.querySelector("td.restaurantPercentReduction").innerHTML = "%" + json.restaurantChange;
+            parentDiv.querySelector("td.shoppingPercentReduction").innerHTML = "%" + json.shoppingChange;
+            parentDiv.querySelector("td.gasPercentReduction").innerHTML = "%" + json.gasChange;
+        }
+    }
+    
+    let parentDiv = button.parentElement;
+    let json = {
+		grocery: parentDiv.querySelector("input.groceryInput").value.substring(1),
+		restaurant: parentDiv.querySelector("input.restaurantInput").value.substring(1),
+		shopping: parentDiv.querySelector("input.shoppingInput").value.substring(1),
+		gas: parentDiv.querySelector("input.gasInput").value.substring(1),
+	}
+    var data = JSON.stringify(json);
+
+    xhr.send(data);
 }
 
-updateAndCalculate = function(){
-
-}
