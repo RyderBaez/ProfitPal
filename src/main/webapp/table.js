@@ -69,7 +69,4 @@ document.addEventListener("DOMContentLoaded", function(){
 		// Perform logout functionality (update local storage/cookie)
 		window.location.href = "home.html";
 	});
-})
-
-
-
+});
