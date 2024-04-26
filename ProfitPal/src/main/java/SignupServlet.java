@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 
 @WebServlet("/SignupServlet")
 public class SignupServlet extends HttpServlet{
+	private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		PrintWriter pw = response.getWriter();
 		response.setContentType("application/json");
@@ -76,11 +77,11 @@ public class SignupServlet extends HttpServlet{
 			conn = DriverManager.getConnection(url);
 			
 			st = conn.createStatement();
-			rs = st.executeQuery("SELECT * FROM users WHERE email='" + email + "'");
+			rs = st.executeQuery("SELECT * FROM ProfitPal.Users WHERE email='" + email + "'");
 			if(!rs.next()) {
 				//no user with that email either
 				rs.close();
-				st.execute("INSERT INTO users(pass, email) VALUES ('" + password + "', '" + email + "'");
+				st.execute("INSERT INTO ProfitPal.Users(email, password) VALUES ('" + email + "', '" + password + "'");
 				rs = st.executeQuery("SELECT LAST_INSERT_ID()");
 				rs.next();
 				userID = rs.getInt(1);
