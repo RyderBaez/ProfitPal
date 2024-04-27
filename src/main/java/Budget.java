@@ -4,8 +4,12 @@ private double grocery; //
 private double restaurant; //
 private double shopping; // 
 private double gas; //
+private String user;
 
-
+	public String getUser() {
+		return user;
+	}
+	
 	public double getGrocery() {
 		return grocery;
 	}

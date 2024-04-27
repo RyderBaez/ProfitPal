@@ -1,11 +1,13 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,6 +43,7 @@ public class ReductionServlet extends HttpServlet {
     		Gson gson = new Gson();
 	        Budget budget = gson.fromJson(xmlData, Budget.class);
 	        
+	        String user = budget.getUser();
 	        double grocery = budget.getGrocery();
 	        double gas = budget.getGas();
 	        double restaurant = budget.getRestaurant();
@@ -91,6 +94,56 @@ public class ReductionServlet extends HttpServlet {
 	        resultMap.put("groceryChange", groceryChange);
 	        resultMap.put("restaurantChange", restaurantChange);
 	        resultMap.put("shoppingChange", shoppingChange);
+	        
+	        try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			}catch(ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+	        
+	        Connection conn = null;
+			Statement st = null;
+			ResultSet rs = null;
+			
+			System.out.println("user");
+			System.out.println(user);
+			
+			try {
+				String encodedPassword = URLEncoder.encode("nR81&U1P1v}E", "UTF-8");
+				String url = "jdbc:mysql://localhost/ProfitPal?user=root&password=" + encodedPassword;
+				conn = DriverManager.getConnection(url);
+				
+				st = conn.createStatement();
+				
+				String grocery_ = "grocery";
+				String gas_ = "gas";
+				String shopping_ = "shopping";
+				String restaurant_ = "restaurant";
+				
+				rs = st.executeQuery("SELECT * FROM ProfitPal.BudgetItems WHERE username='" + user + "'");
+				if(!rs.next()) {
+					rs.close();
+					System.out.println("in here1");
+//					st.execute("INSERT INTO ProfitPal.Users(email, password) VALUES ('" + email + "', '" + password + "')");
+
+					st.execute("INSERT INTO ProfitPal.BudgetItems(username, category, spending) VALUES ('" + user + "', '" + grocery_ + "', '" + grocery + "')");
+					st.execute("INSERT INTO ProfitPal.BudgetItems(username, category, spending) VALUES ('" + user + "', '" + gas_ + "', '" + gas + "')");
+					st.execute("INSERT INTO ProfitPal.BudgetItems(username, category, spending) VALUES ('" + user + "', '" + shopping_ + "', '" + shopping + "')");
+					st.execute("INSERT INTO ProfitPal.BudgetItems(username, category, spending) VALUES ('" + user + "', '" + restaurant_ + "', '" + restaurant + "')");
+				}else {
+					st.execute("UPDATE ProfitPal.BudgetItems SET spending='" + grocery + "' WHERE username='" + user + "' AND category='" + grocery_ + "'");
+					st.execute("UPDATE ProfitPal.BudgetItems SET spending='" + gas + "' WHERE username='" + user + "' AND category='" + gas_ + "'");
+					st.execute("UPDATE ProfitPal.BudgetItems SET spending='" + restaurant + "' WHERE username='" + user + "' AND category='" + restaurant_ + "'");
+					st.execute("UPDATE ProfitPal.BudgetItems SET spending='" + shopping + "' WHERE username='" + user + "' AND category='" + shopping_ + "'");
+				}
+				
+//				st.executeUpdate("SELECT * FROM ProfitPal.Users WHERE email='" + email + "' AND password='" + password + "'");
+				
+				
+			}catch(SQLException sqle) {
+				System.out.println("SQLException in ReductionServlet.");
+				sqle.printStackTrace();
+			}
     		
 	        String jsonResponse = gson.toJson(resultMap);
 	        System.out.println(jsonResponse);

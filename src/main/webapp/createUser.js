@@ -19,8 +19,6 @@ document.addEventListener("DOMContentLoaded", function(){
         window.location.href = "loginUser.html";
     });
 
-	
-
 	document.querySelector("#signup-form").onsubmit = function() {
 		
 		// Validate information for empty fields and rules before sending to the server
@@ -127,51 +125,38 @@ document.addEventListener("DOMContentLoaded", function(){
 			document.querySelector("#password-error-2").innerHTML = ''
 		}
 		
-		console.log("is form valid: " + validForm);
 		// All checks passed then send to Servlet
-		if(validForm){
-			var xhr = new XMLHttpRequest();
-			var url = "SignupServlet";
-			/*
-			firstName = document.getElementById("first-name");
-			console.log("firstName " + firstName);
-    		lastName = document.getElementById("last-name");
-   			email = document.getElementById("email");
-    	 	password = document.getElementById("password");
-    		passwordRepeat = document.getElementById("password-repeat");
-    		
-			var encodeEmail = encodeURIComponent(email.value);
-			var encodePassword = encodeURIComponent(password.value);
-			var encodePasswordRepeat = encodeURIComponent(passwordRepeat.value);
-			var encodeFname = encodeURIComponent(firstName.value);
-			var encodeLname = encodeURIComponent(lastName.value);
-			var encodeFname = encodeURIComponent(firstName);*/
-			
-			var encodeFname = encodeURIComponent(firstName);
-			var encodeLname = encodeURIComponent(lastName);
-			var encodeEmail = encodeURIComponent(email);
-			var encodePassword = encodeURIComponent(password);
-			var encodePasswordRepeat = encodeURIComponent(passwordRepeat);
-			
-			console.log(email.value);
-			console.log(encodeEmail);
-			var params = "email=" + encodeEmail + "&password=" + encodePassword + "&firstName=" + encodeFname + "&lastName=" + encodeLname
-			+ "&passwordRepeat=" + encodePasswordRepeat;
-			console.log("Data Pushed to Server")
+		if (validForm) {
+		  var xhr = new XMLHttpRequest();
+		  var url = "SignupServlet";
 		
-			xhr.open("POST", url, true);
-			xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == XMLHttpRequest.DONE) {
-					if (xhr.status == 200) {
-						//valid response
-						window.location.href = "loginUser.html";
-					} else {
-						alert("Error: " + xhr.status);
-					}
-				}
-			};
-			xhr.send(params);
+		  var encodeFname = encodeURIComponent(firstName);
+		  var encodeLname = encodeURIComponent(lastName);
+		  var encodeEmail = encodeURIComponent(email);
+		  var encodePassword = encodeURIComponent(password);
+		  var encodePasswordRepeat = encodeURIComponent(passwordRepeat);
+		
+		  console.log(email);
+		  console.log(encodeEmail);
+		
+		  var params = "email=" + encodeEmail + "&password=" + encodePassword + "&firstName=" + encodeFname + "&lastName=" + encodeLname + "&passwordRepeat=" + encodePasswordRepeat;
+		
+		  console.log("Data Pushed to Server");
+		
+		  xhr.open("POST", url, true);
+		  xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		  xhr.onreadystatechange = function() {
+		    if (xhr.readyState == XMLHttpRequest.DONE) {
+		      if (xhr.status == 200) {
+		        //valid response
+		        localStorage.setItem("user", email);
+		        window.location.href = "home.html";
+		      } else {
+		        console.error("Error: " + xhr.status + " - " + xhr.responseText);
+		      }
+		    }
+		  };
+		  xhr.send(params);
 		}
 		return false;
 	} // End of submitButton Event

@@ -17,8 +17,8 @@
     
     <div class="button-group">
     <button class="button home" id="homeButton">Home</button>
-    <button class="button guest-view" id="guestViewButton">Guest View</button>
-    <button class="button logout" id="logoutButton">Logout</button>
+    <button class="button guest-view" id="guestViewButton">Family View</button>
+    <button class="button logout" id="logoutButton" onclick="logHandler()">Logout</button>
     </div>
     <div>
     	<table class="table">
@@ -30,32 +30,31 @@
 		  </tr>
 		  <tr>
 		    <td class="grocery">Grocery</td>
-		    <td><input type="text" value="$389.33" class="groceryInput"></td>
+		    <td>$<input type="text" value="0" class="groceryInput"></td>
 		    <td class="groceryMonetaryReduction">-</td>
 		    <td class="groceryPercentReduction">-</td>
 		  </tr>
 		  <tr>
 		    <td class="restaurant">Restaurant</td>
-		    <td><input type="text" value="$95.39" class="restaurantInput"></td>
+		    <td>$<input type="text" value="0" class="restaurantInput"></td>
 		    <td class="restaurantMonetaryReduction">-</td>
 		    <td class="restaurantPercentReduction">-</td>
 		  </tr>
 		  <tr>
 		    <td class="shopping">Shopping</td>
-		    <td><input type="text" value="$625.49" class="shoppingInput"></td>
+		    <td>$<input type="text" value="0" class="shoppingInput"></td>
 		    <td class="shoppingMonetaryReduction">-</td>
 		    <td class="shoppingPercentReduction">-</td>
 		  </tr>
 		  <tr>
 		    <td class="gas">Gas</td>
-		    <td><input type="text" value="$33.50" class="gasInput"></td>
+		    <td>$<input type="text" value="0" class="gasInput"></td>
 		    <td class="gasMonetaryReduction">-</td>
 		    <td class="gasPercentReduction">-</td>
 		  </tr>
 		</table>
-	    <button class="button calcButton" onClick="updateAndCalculate(this)">Calculate</button>	    
+	    <button class="button calcButton" onClick="updateAndCalculate(this)">Calculate</button>	  
     </div>
-        
 </body>
 </html>
 

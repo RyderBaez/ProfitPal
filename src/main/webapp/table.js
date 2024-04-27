@@ -1,6 +1,33 @@
 username = "test";
 
+
+/* window.onload = function() {
+	if(localStorage.length != 0){
+		console.log("logged in");
+		document.getElementById("logoutButton").innerHTML = "Log out";
+	} else {
+		document.getElementById("logoutButton").innerHTML = "Login";
+	}
+} */
+
+function logHandler() {
+	console.log("hi");
+	if(localStorage.length == 0) {
+		console.log("logged out");
+		window.location.href = "loginUser.html"; 
+	} else {
+		localStorage.clear();
+		window.location.href = "home.html";
+	}
+}
+
 window.onload = function() {
+	if(localStorage.length != 0){
+		document.getElementById("logoutButton").innerHTML = "Log out";
+	} else {
+		document.getElementById("logoutButton").innerHTML = "Login";
+	}
+	
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'LoadItemsServlet', true);
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -9,14 +36,23 @@ window.onload = function() {
             console.log(this.responseText);
             response = JSON.parse(this.responseText);
             console.log(response);
-            for(let category in response){
-                catString = category.toString();
-                container = document.getElementById(catString + 'Spending');
-                container.value = response[category];
-            }
+            
+            document.querySelector("input.groceryInput").value = response.grocery;
+            document.querySelector("input.restaurantInput").value = response.restaurant;
+            document.querySelector("input.shoppingInput").value = response.shopping;
+            document.querySelector("input.gasInput").value = response.gas;
+            
+            console.log("loaded");
+            
         }
     }
-    xhr.send();
+    
+    let json = {
+		user: localStorage.user,
+	}
+    var data = JSON.stringify(json);
+
+    xhr.send(data);    
 } 
 
 function updateAndCalculate(button) {
@@ -29,10 +65,10 @@ function updateAndCalculate(button) {
             let parentDiv = button.parentElement;
             console.log(json);
             
-            parentDiv.querySelector("input.groceryInput").value = "$" + json.budget.grocery;
-            parentDiv.querySelector("input.restaurantInput").value = "$" + json.budget.restaurant;
-            parentDiv.querySelector("input.shoppingInput").value = "$" + json.budget.shopping;
-            parentDiv.querySelector("input.gasInput").value = "$" + json.budget.gas;
+            parentDiv.querySelector("input.groceryInput").value = json.budget.grocery;
+            parentDiv.querySelector("input.restaurantInput").value = json.budget.restaurant;
+            parentDiv.querySelector("input.shoppingInput").value = json.budget.shopping;
+            parentDiv.querySelector("input.gasInput").value = json.budget.gas;
             
             parentDiv.querySelector("td.groceryMonetaryReduction").innerHTML = "$" + json.monetaryGroceryReduction;
             parentDiv.querySelector("td.restaurantMonetaryReduction").innerHTML = "$" + json.monetaryRestaurantReduction;
@@ -47,11 +83,13 @@ function updateAndCalculate(button) {
     }
     
     let parentDiv = button.parentElement;
+    console.log(localStorage.user);
     let json = {
-		grocery: parentDiv.querySelector("input.groceryInput").value.substring(1),
-		restaurant: parentDiv.querySelector("input.restaurantInput").value.substring(1),
-		shopping: parentDiv.querySelector("input.shoppingInput").value.substring(1),
-		gas: parentDiv.querySelector("input.gasInput").value.substring(1),
+		grocery: parentDiv.querySelector("input.groceryInput").value,
+		restaurant: parentDiv.querySelector("input.restaurantInput").value,
+		shopping: parentDiv.querySelector("input.shoppingInput").value,
+		gas: parentDiv.querySelector("input.gasInput").value,
+		user: localStorage.user,
 	}
     var data = JSON.stringify(json);
 
@@ -69,4 +107,13 @@ document.addEventListener("DOMContentLoaded", function(){
 		// Perform logout functionality (update local storage/cookie)
 		window.location.href = "home.html";
 	});
+	guestViewButton.addEventListener("click", function(){
+		window.location.href = "tableShared.html";
+	})
+	setOverlayVisible(true);
 });
+
+function setOverlayVisible(visible) {
+    var overlay = document.querySelector('.overlay');
+    overlay.style.display = visible ? 'flex' : 'none';
+}

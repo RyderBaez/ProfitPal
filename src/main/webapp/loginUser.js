@@ -54,11 +54,7 @@ document.addEventListener("DOMContentLoaded", function(){
 			validForm = false
 			document.querySelector("#password-error").innerHTML = "Password cannot be empty."
 		} 
-		// Check security
-		else if (/(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).*/.test(password) == false) {
-			validForm = false
-			document.querySelector("#password-error").innerHTML = 'Insecure password'
-		} 
+
 		// valid
 		else {
 			document.querySelector("#password-error").innerHTML = ''
@@ -82,7 +78,8 @@ document.addEventListener("DOMContentLoaded", function(){
 					if (xhr.status == 200) {
 						//valid response
 						console.log("success");
-						window.location.href = "loginUser.html";
+						localStorage.setItem("user", email);
+						window.location.href = "home.html";
 					} else {
 						alert("Error: " + xhr.status);
 					}
