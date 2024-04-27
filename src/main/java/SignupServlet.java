@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 public class SignupServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		System.out.println("signup servlet working");
 		PrintWriter pw = response.getWriter();
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
@@ -73,7 +74,7 @@ public class SignupServlet extends HttpServlet{
 		try {
 			//TODO: change this to your SQL password when testing
 			String encodedPassword = URLEncoder.encode("nR81&U1P1v}E", "UTF-8");
-			String url = "jdbc:mysql://localhost/homework4?user=root&password=" + encodedPassword;
+			String url = "jdbc:mysql://localhost/ProfitPal?user=root&password=" + encodedPassword;
 			conn = DriverManager.getConnection(url);
 			
 			st = conn.createStatement();
@@ -81,7 +82,7 @@ public class SignupServlet extends HttpServlet{
 			if(!rs.next()) {
 				//no user with that email either
 				rs.close();
-				st.execute("INSERT INTO ProfitPal.Users(email, password) VALUES ('" + email + "', '" + password + "'");
+				st.execute("INSERT INTO ProfitPal.Users(email, password) VALUES ('" + email + "', '" + password + "')");
 				rs = st.executeQuery("SELECT LAST_INSERT_ID()");
 				rs.next();
 				userID = rs.getInt(1);
