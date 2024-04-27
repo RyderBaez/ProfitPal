@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	
 
 	document.querySelector("#signup-form").onsubmit = function() {
+		
 		// Validate information for empty fields and rules before sending to the server
 		let validForm = true;
 		
@@ -126,15 +127,34 @@ document.addEventListener("DOMContentLoaded", function(){
 			document.querySelector("#password-error-2").innerHTML = ''
 		}
 		
+		console.log("is form valid: " + validForm);
 		// All checks passed then send to Servlet
 		if(validForm){
 			var xhr = new XMLHttpRequest();
 			var url = "SignupServlet";
+			/*
+			firstName = document.getElementById("first-name");
+			console.log("firstName " + firstName);
+    		lastName = document.getElementById("last-name");
+   			email = document.getElementById("email");
+    	 	password = document.getElementById("password");
+    		passwordRepeat = document.getElementById("password-repeat");
+    		
 			var encodeEmail = encodeURIComponent(email.value);
 			var encodePassword = encodeURIComponent(password.value);
 			var encodePasswordRepeat = encodeURIComponent(passwordRepeat.value);
 			var encodeFname = encodeURIComponent(firstName.value);
 			var encodeLname = encodeURIComponent(lastName.value);
+			var encodeFname = encodeURIComponent(firstName);*/
+			
+			var encodeFname = encodeURIComponent(firstName);
+			var encodeLname = encodeURIComponent(lastName);
+			var encodeEmail = encodeURIComponent(email);
+			var encodePassword = encodeURIComponent(password);
+			var encodePasswordRepeat = encodeURIComponent(passwordRepeat);
+			
+			console.log(email.value);
+			console.log(encodeEmail);
 			var params = "email=" + encodeEmail + "&password=" + encodePassword + "&firstName=" + encodeFname + "&lastName=" + encodeLname
 			+ "&passwordRepeat=" + encodePasswordRepeat;
 			console.log("Data Pushed to Server")
