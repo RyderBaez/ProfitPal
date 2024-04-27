@@ -69,8 +69,10 @@ document.addEventListener("DOMContentLoaded", function(){
 		if(validForm){
 			var xhr = new XMLHttpRequest();
 			var url = "LoginServlet";
-			var encodeEmail = encodeURIComponent(email.value);
-			var encodePassword = encodeURIComponent(password.value);
+			var encodeEmail = encodeURIComponent(email);
+			var encodePassword = encodeURIComponent(password);
+		    console.log("email entered " + email);
+		    console.log("password entered " +password);
 			var params = "email=" + encodeEmail + "&password=" + encodePassword;
 		
 			xhr.open("POST", url, true);
@@ -79,6 +81,7 @@ document.addEventListener("DOMContentLoaded", function(){
 				if (xhr.readyState == XMLHttpRequest.DONE) {
 					if (xhr.status == 200) {
 						//valid response
+						console.log("success");
 						window.location.href = "loginUser.html";
 					} else {
 						alert("Error: " + xhr.status);
