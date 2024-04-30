@@ -42,6 +42,20 @@
 document.addEventListener('DOMContentLoaded', function() {
 	
 	var socket = new WebSocket('ws://localhost:8181/ProfitPalTest/SharedServlet');
+	const homeButton = document.getElementById("homeButton");
+	const guestViewButton = document.getElementById("guestViewButton");
+	const logoutButton = document.getElementById("logoutButton");
+	
+	homeButton.addEventListener("click", function(){
+		window.location.href = "home.html";
+	});
+	logoutButton.addEventListener("click", function(){
+		// Perform logout functionality (update local storage/cookie)
+		window.location.href = "home.html";
+	});
+	guestViewButton.addEventListener("click", function(){
+		window.location.href = "table.html";
+	});
 
 socket.onopen = function(event) {
         console.log("WebSocket connection opened");
