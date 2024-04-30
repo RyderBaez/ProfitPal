@@ -3,22 +3,26 @@ body {
   font-family: Arial, sans-serif;
 }
 
-table {
+.table-container {
+  width: 525px; /* Width should match the overlay width */
+  margin: 20px auto 0 auto; /* Center the table container with a margin from the top */
+  position: relative;
   display: flex;
-  justify-content: center; /* Centers horizontally in the flex container */
-  align-items: center; /* Centers vertically in the flex container */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; /* Stack elements vertically */
+}
+
+table {
+  width: 100%; /* Make the table width equal to its container */
+  margin: 0; /* Remove margin to align with the start of the container */
   border-collapse: collapse;
-  text-align: center;
-  margin-top: 20px;
-  padding: 20px; /* Spacing inside the box */
-  margin: 20px 0; /* Spacing outside the box */
-  width: 100%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 th, td {
-  padding: 8px;
   border: 1px solid #ddd;
+  vertical-align: middle;
 }
 
 th {
@@ -33,14 +37,22 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #f1f1f1;
 }
+input[type="text"] {
+  width: 75px; /* Auto width to fit content */
+  margin: 0; /* Remove any default margin */
+  display: inline-block; /* Ensures that input is on the same line as other elements */
+}
+.dollar-sign {
+  display: inline-block; /* Align with the input field */
+}
 
-  .header-container {
-    width: 80%;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+ .header-container {
+   width: 80%;
+   margin: auto;
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+ }
 
 .header {
     display: flex;
@@ -69,13 +81,15 @@ tr:hover {
 
 .button {
     padding: 15px 30px;
-    margin: 0 40px;
+    margin: 0;
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
     color: black;
+    background-color: pink; 
+    display:block;
 }
 
 .button:hover {
@@ -98,31 +112,25 @@ tr:hover {
 }
 
 .calcButton{
-	margin-bottom: 20px;
-	align-items: center; /* Centers vertically in the flex container */
-    background-color: pink; 
-    margin-left: 45%;
+  text-align: center; /* Center the button container text */
+  width: 100%; /* Full width to center content properly */
+  margin-top: 20px;
+  align-content: center;
+  justify-content: center; 
+  display: flex;
 }
 
-div {
-  position: relative;
-}
 
 /* New styles for the overlay */
 .overlay {
-  position: absolute;
+position: absolute;
   top: 0;
-  right: 0;
-  bottom: 0;
-  left: 35%;
-  width: 525px;
-  height: 235px;
-  background: rgba(128, 128, 128, 0.5); /* Grey background */
-  backdrop-filter: blur(1.5px); /* Blur effect */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10; /* Ensure it sits on top of the table */
+  left: 0; /* Align left with the table */
+  width: 100%; /* Overlay width matches the container width */
+  height: 300px;
+  background: rgba(128, 128, 128, 0.5);
+  backdrop-filter: blur(1.5px);
+  z-index: 10;
 }
 
 /* If you want to hide the overlay by default, add this */

@@ -5,6 +5,8 @@
     <title>Table</title>
     <script src="table.js"></script>
 	<link rel="stylesheet" href="table.css">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
     <div class="header-container">
@@ -20,7 +22,7 @@
     <button class="button guest-view" id="guestViewButton">Family View</button>
     <button class="button logout" id="logoutButton" onclick="logHandler()">Logout</button>
     </div>
-    <div>
+    <div class="table-container">
     	<table class="table">
 		  <tr>
 		    <th>Category</th>
@@ -53,7 +55,11 @@
 		    <td class="gasPercentReduction">-</td>
 		  </tr>
 		</table>
-	    <button class="button calcButton" onClick="updateAndCalculate(this)">Calculate</button>	  
+
+		<div class="overlay"></div>
+		<div class="calcButton">
+			<button class="button" onClick="updateAndCalculate(this)">Calculate</button>	  
+		</div>
     </div>
 </body>
 </html>
