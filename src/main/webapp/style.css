@@ -1,9 +1,16 @@
-body {
+.body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 20px;
-  }
+}
+p{
+	font-family: 'Arial', sans-serif;
+}
+
+h1{
+	font-family: 'Arial', sans-serif;
+}
   .header-container {
     width: 80%;
     margin: auto;
@@ -21,9 +28,11 @@ body {
     
   }
   
-.no-underline {
-    text-decoration: none;
+.no-underline, .no-underline:visited, .no-underline:hover, .no-underline:active {
+  text-decoration: none; /* Removes underline */
+  color: inherit; /* Keeps the text color consistent */
 }
+
 
   .test-container .card{
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -37,17 +46,13 @@ body {
         text-align: center;
   }
 
-  .container {
-    width: 80%;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  .header {
-    text-align: center;
-    margin: 20px 0;
-  }
+.container {
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 
 
 .test {
@@ -75,9 +80,10 @@ body {
     background-color: #f9a1a1;
     border-radius: 25px; /* Rounded corners */
     padding: 20px; /* Spacing inside the box */
-    margin: 20px 0; /* Spacing outside the box */
+    margin: 20px; /* Spacing outside the box */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* A subtle shadow */
     width: 400px;
+    text-align: center;
 }
 
 .header h1 {
