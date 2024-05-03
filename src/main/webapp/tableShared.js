@@ -92,6 +92,7 @@ socket.onmessage = function(event) {
     const Restaurant = document.querySelector('input.restaurantInput');
     const Shopping = document.querySelector('input.shoppingInput');
     const Gas = document.querySelector('input.gasInput');
+    const Code = document.querySelector('Code');
 
     Grocery.addEventListener('input', function() {
 		console.log('hello');
@@ -101,6 +102,7 @@ socket.onmessage = function(event) {
 		restaurant: "blank",
 		shopping: "blank",
 		gas: "blank",
+	    	code: document.querySelector("Code").value,
 	}
     var data = JSON.stringify(json);
 
@@ -120,6 +122,7 @@ socket.onmessage = function(event) {
 		restaurant: document.querySelector("input.restaurantInput").value,
 		shopping: "blank",
 		gas: "blank",
+		code: document.querySelector("Code").value,
 	}
     var data = JSON.stringify(json);
 
@@ -133,6 +136,7 @@ socket.onmessage = function(event) {
 		restaurant: "blank",
 		shopping: document.querySelector("input.shoppingInput").value,
 		gas: "blank",
+		code: document.querySelector("Code").value,
 	}
     var data = JSON.stringify(json);
 
@@ -146,6 +150,7 @@ socket.onmessage = function(event) {
 		restaurant: "blank",
 		shopping: "blank",
 		gas: document.querySelector("input.gasInput").value,
+		code: document.querySelector("Code").value,
 	}
     var data = JSON.stringify(json);
 
