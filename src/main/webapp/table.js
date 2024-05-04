@@ -120,7 +120,13 @@ document.addEventListener("DOMContentLoaded", function(){
 	guestViewButton.addEventListener("click", function(){
 		window.location.href = "tableShared.html";
 	})
-	setOverlayVisible(true);
+	
+	if(localStorage.length != 0){
+		setOverlayVisible(false);
+	} else {
+		setOverlayVisible(true);
+	}
+	// setOverlayVisible(true);
 });
 
 function setOverlayVisible(visible) {
