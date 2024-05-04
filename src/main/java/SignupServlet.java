@@ -2,6 +2,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -82,7 +84,10 @@ public class SignupServlet extends HttpServlet{
 			if(!rs.next()) {
 				//no user with that email either
 				rs.close();
-				st.execute("INSERT INTO ProfitPal.Users(email, password) VALUES ('" + email + "', '" + password + "')");
+				// Hash the password before storing it in the database
+				String hashedPassword = hashPassword(password);
+				st.execute("INSERT INTO ProfitPal.Users(email, password) VALUES ('" + email + "', '" + hashedPassword + "')");
+				//st.execute("INSERT INTO ProfitPal.Users(email, password) VALUES ('" + email + "', '" + password + "')");
 				rs = st.executeQuery("SELECT LAST_INSERT_ID()");
 				rs.next();
 				userID = rs.getInt(1);
@@ -108,6 +113,24 @@ public class SignupServlet extends HttpServlet{
 			}
 		}
 		return userID;
+	}
+	private static String hashPassword(String password) {
+	    try {
+	    	System.out.println("hashing fct reached");
+	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	        byte[] hash = digest.digest(password.getBytes("UTF-8"));
+	        StringBuilder hexString = new StringBuilder();
+	        for (byte b : hash) {
+	            String hex = Integer.toHexString(0xff & b);
+	            if (hex.length() == 1) hexString.append('0');
+	            hexString.append(hex);
+	        }
+	        System.out.println("new password: " + hexString.toString());
+	        return hexString.toString();
+	    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 	
 }
