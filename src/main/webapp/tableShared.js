@@ -1,4 +1,11 @@
 
+
+
+
+
+
+
+
     /*
      var xhr = new XMLHttpRequest();
     xhr.open('POST', 'ReductionServlet', true);
@@ -42,20 +49,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 	
 	var socket = new WebSocket('ws://localhost:8181/ProfitPalTest/SharedServlet');
-	const homeButton = document.getElementById("homeButton");
-	const guestViewButton = document.getElementById("guestViewButton");
-	const logoutButton = document.getElementById("logoutButton");
-	
-	homeButton.addEventListener("click", function(){
-		window.location.href = "home.html";
-	});
-	logoutButton.addEventListener("click", function(){
-		// Perform logout functionality (update local storage/cookie)
-		window.location.href = "home.html";
-	});
-	guestViewButton.addEventListener("click", function(){
-		window.location.href = "table.html";
-	});
 
 socket.onopen = function(event) {
         console.log("WebSocket connection opened");
@@ -82,6 +75,10 @@ socket.onmessage = function(event) {
 	
     document.querySelector("input.gasInput").value = dataRead.gas;
     }
+    if(dataRead.code != null && dataRead.code != 'blank'){
+	
+    document.querySelector("input.Code").value = dataRead.code;
+    }
     };
     
      socket.onclose = function(event) {
@@ -92,24 +89,24 @@ socket.onmessage = function(event) {
     const Restaurant = document.querySelector('input.restaurantInput');
     const Shopping = document.querySelector('input.shoppingInput');
     const Gas = document.querySelector('input.gasInput');
-    const Code = document.querySelector('input.Code');
+    const Code = document.querySelector('Code');
+    //TODO add from text box the code
 
     Grocery.addEventListener('input', function() {
-		console.log('hello');
+		
             //parentDiv.querySelector("input.groceryInput").value = "$" + json.budget.grocery;
     let json = {
 		grocery: document.querySelector("input.groceryInput").value,
 		restaurant: "blank",
 		shopping: "blank",
 		gas: "blank",
-	    	code: document.querySelector("input.Code").value,
+		code: document.querySelector("input.Code").value,
 	}
     var data = JSON.stringify(json);
 
     if (socket.readyState === WebSocket.OPEN) {
 		console.log(data);
     	socket.send(data);
-    	console.log('nuts');
 } 	else {
     console.log("WebSocket is not open. Current state:", socket.readyState);
 }
@@ -122,7 +119,7 @@ socket.onmessage = function(event) {
 		restaurant: document.querySelector("input.restaurantInput").value,
 		shopping: "blank",
 		gas: "blank",
-		code: document.querySelector("input.Code").value,
+		code: document.querySelector("Code").value,
 	}
     var data = JSON.stringify(json);
 
@@ -136,7 +133,7 @@ socket.onmessage = function(event) {
 		restaurant: "blank",
 		shopping: document.querySelector("input.shoppingInput").value,
 		gas: "blank",
-		code: document.querySelector("input.Code").value,
+		code: document.querySelector("Code").value,
 	}
     var data = JSON.stringify(json);
 
@@ -150,14 +147,93 @@ socket.onmessage = function(event) {
 		restaurant: "blank",
 		shopping: "blank",
 		gas: document.querySelector("input.gasInput").value,
-		code: document.querySelector("input.Code").value,
+		code: document.querySelector("Code").value,
 	}
     var data = JSON.stringify(json);
 
     socket.send(data);
     });
+    function updateAndCalculate(button) {
+	 var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'ReductionServlet', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function(){
+        if(this.status == 200){
+			json = JSON.parse(this.responseText);
+            let parentDiv = button.parentElement;
+            console.log(json);
+            
+            parentDiv.querySelector("input.groceryInput").value = json.budget.grocery;
+            parentDiv.querySelector("input.restaurantInput").value = json.budget.restaurant;
+            parentDiv.querySelector("input.shoppingInput").value = json.budget.shopping;
+            parentDiv.querySelector("input.gasInput").value = json.budget.gas;
+            
+            parentDiv.querySelector("td.groceryMonetaryReduction").innerHTML = "$" + json.monetaryGroceryReduction;
+            parentDiv.querySelector("td.restaurantMonetaryReduction").innerHTML = "$" + json.monetaryRestaurantReduction;
+            parentDiv.querySelector("td.shoppingMonetaryReduction").innerHTML = "$" + json.monetaryShoppingReduction;
+            parentDiv.querySelector("td.gasMonetaryReduction").innerHTML = "$" + json.monetaryGasReduction;
+            
+            parentDiv.querySelector("td.groceryPercentReduction").innerHTML = json.groceryChange + "%";
+            parentDiv.querySelector("td.restaurantPercentReduction").innerHTML =  json.restaurantChange + "%";
+            parentDiv.querySelector("td.shoppingPercentReduction").innerHTML =  json.shoppingChange + "%";
+            parentDiv.querySelector("td.gasPercentReduction").innerHTML =  json.gasChange + "%";
+        }
+    }
+    
+    let parentDiv = button.parentElement;
+    console.log(localStorage.user);
+    let json = {
+		grocery: parentDiv.querySelector("input.groceryInput").value,
+		restaurant: parentDiv.querySelector("input.restaurantInput").value,
+		shopping: parentDiv.querySelector("input.shoppingInput").value,
+		gas: parentDiv.querySelector("input.gasInput").value,
+		user: localStorage.user,
+	}
+    var data = JSON.stringify(json);
+
+    xhr.send(data);
+}
 })
 
+function updateAndCalculate(button) {
+	 var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'ReductionServlet', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onload = function(){
+        if(this.status == 200){
+			json = JSON.parse(this.responseText);
+            let parentDiv = document;
+            console.log(json);
+            
+            parentDiv.querySelector("input.groceryInput").value = json.budget.grocery;
+            parentDiv.querySelector("input.restaurantInput").value = json.budget.restaurant;
+            parentDiv.querySelector("input.shoppingInput").value = json.budget.shopping;
+            parentDiv.querySelector("input.gasInput").value = json.budget.gas;
+            
+            parentDiv.querySelector("td.groceryMonetaryReduction").innerHTML = "$" + json.monetaryGroceryReduction;
+            parentDiv.querySelector("td.restaurantMonetaryReduction").innerHTML = "$" + json.monetaryRestaurantReduction;
+            parentDiv.querySelector("td.shoppingMonetaryReduction").innerHTML = "$" + json.monetaryShoppingReduction;
+            parentDiv.querySelector("td.gasMonetaryReduction").innerHTML = "$" + json.monetaryGasReduction;
+            
+            parentDiv.querySelector("td.groceryPercentReduction").innerHTML = json.groceryChange + "%";
+            parentDiv.querySelector("td.restaurantPercentReduction").innerHTML =  json.restaurantChange + "%";
+            parentDiv.querySelector("td.shoppingPercentReduction").innerHTML =  json.shoppingChange + "%";
+            parentDiv.querySelector("td.gasPercentReduction").innerHTML =  json.gasChange + "%";
+        }
+    }
+    
+    console.log(localStorage.user);
+    let json = {
+		grocery: document.querySelector("input.groceryInput").value,
+		restaurant: document.querySelector("input.restaurantInput").value,
+		shopping: document.querySelector("input.shoppingInput").value,
+		gas: document.querySelector("input.gasInput").value,
+		user: localStorage.user,
+	}
+    var data = JSON.stringify(json);
+
+    xhr.send(data);
+}
 /*
 function updateAndCalculate(button) {
 	 var xhr = new XMLHttpRequest();

@@ -1,7 +1,11 @@
 
-import javax.servlet.annotation.WebServlet;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArraySet;
+
 import javax.websocket.CloseReason;
-import javax.websocket.Endpoint;
 import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -18,8 +22,20 @@ public class SharedServlet {
 
     @OnOpen
     public void onOpen(Session session, EndpointConfig config) {
-    	sessionsMap.computeIfAbsent("0000", k -> new CopyOnWriteArraySet<>()).add(session);
+    	String code = ChatGPTAPI.sendPrompt();
+        Gson gson = new Gson();
+        GPTAPI GPTResponse = gson.fromJson(code, GPTAPI.class);
+        String FinalCode = GPTResponse.getChoices().get(0).getMessage().getContent();
+    	sessionsMap.computeIfAbsent(FinalCode, k -> new CopyOnWriteArraySet<>()).add(session);
         System.out.println("WebSocket connection opened: " + session.getId());
+        SentData data = new SentData();
+        data.setCode(FinalCode);
+        data.setGas("blank");
+        data.setGrocery("blank");
+        data.setRestaurant("blank");
+        data.setShopping("blank");
+        String message = gson.toJson(data);
+        broadcast(FinalCode, message, session);
     }
     @OnMessage
     public void onMessage(String message, Session session) {
@@ -80,3 +96,4 @@ public class SharedServlet {
         sessionsMap.computeIfAbsent(newKey, k -> new CopyOnWriteArraySet<>()).add(session);
     }
 
+}
