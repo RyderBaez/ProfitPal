@@ -82,10 +82,57 @@ while(m = regex.exec(location.href)){
 
 if(Object.keys(params).length > 0){
 	localStorage.setItem('authInfo', JSON.stringify(params))
+	
+	
+	
+	window.history.pushState({}, document.title,"/" + "ProfitPalTest/home.html")
+
+	let info = JSON.parse(localStorage.getItem('authInfo'))
+	console.log(JSON.parse(localStorage.getItem('authInfo')))
+	localStorage.setItem('access_token', JSON.parse(localStorage.getItem("authInfo")).access_token)
+	// console.log(info['access_token'])
+	// console.log(info['expires_in'])
+	
+	fetch("https://www.googleapis.com/oauth2/v3/userinfo",{
+		headers:{
+			"Authorization": `Bearer ${localStorage.getItem("access_token")}`	
+		}
+	})
+	.then((data) => data.json())
+	.then((info) => {
+		console.log(info)
+		var fullname = (info.family_name + info.given_name)
+		var email = fullname + "@gmail.com"
+		var password = "password"
+		var xhr = new XMLHttpRequest();
+		var url = "OauthServlet";
+		var encodeEmail = encodeURIComponent(email);
+		var encodePassword = encodeURIComponent(password);
+	    console.log("email entered " + email);
+	    console.log("password entered " + password);
+		var param = "email=" + encodeEmail + "&password=" + encodePassword;
+	
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == XMLHttpRequest.DONE) {
+				if (xhr.status == 200) {
+					//valid response
+					console.log("success");
+					localStorage.setItem("user", email);
+					//window.location.href = "home.html";
+				} else {
+					alert("Error: " + xhr.status);
+				}
+			}
+		};
+		xhr.send(param);
+	})
 }
 
-window.history.pushState({}, document.title,"/" + "ProfitPalTest/home.html")
+// window.history.pushState({}, document.title,"/" + "ProfitPalTest/home.html")
 
+/*
 let info = JSON.parse(localStorage.getItem('authInfo'))
 console.log(JSON.parse(localStorage.getItem('authInfo')))
 localStorage.setItem('access_token', JSON.parse(localStorage.getItem("authInfo")).access_token)
@@ -119,14 +166,14 @@ fetch("https://www.googleapis.com/oauth2/v3/userinfo",{
 				//valid response
 				console.log("success");
 				localStorage.setItem("user", email);
-				/*window.location.href = "home.html";*/
+				//window.location.href = "home.html";
 			} else {
 				alert("Error: " + xhr.status);
 			}
 		}
 	};
 	xhr.send(param);
-})
+})*/
 
 </script>
       </body>
