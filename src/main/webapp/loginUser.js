@@ -90,3 +90,31 @@ document.addEventListener("DOMContentLoaded", function(){
 		return false;
     }
 });
+
+function oauth() {
+    let o2e = "https://accounts.google.com/o/oauth2/v2/auth"
+    
+    let form = document.createElement('form')
+    form.setAttribute('method', 'GET')
+    form.setAttribute('action', o2e)
+    
+    let params = {
+		"client_id": "1060277566661-c2766lsfp74vnq5qb7lblcghqalf1lcf.apps.googleusercontent.com",
+		"redirect_uri": "http://localhost:8080/ProfitPalTest/home.html",
+		"response_type": "token",
+		"scope": "https://www.googleapis.com/auth/userinfo.profile",
+		"include_granted_scopes": 'true',
+		'state': 'pass-through-value'
+	}
+	
+	for(var p in params){
+		let input = document.createElement('input')
+		input.setAttribute('type', 'hidden')
+		input.setAttribute('name', p)
+		input.setAttribute('value', params[p])
+		form.appendChild(input)
+	}
+	
+	document.body.appendChild(form)
+	form.submit();
+}
