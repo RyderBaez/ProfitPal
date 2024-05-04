@@ -22,7 +22,7 @@ public class UpdateItemsServlet extends HttpServlet {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/Assignment4?user=root&password=root");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/ProfitPal?user=root&password=root");
             for(int i = 0; i < items.length; i++){
                 String item = items[i];
                 double price = Double.parseDouble(prices[i]);

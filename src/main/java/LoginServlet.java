@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -28,6 +30,7 @@ public class LoginServlet extends HttpServlet{
 
 		String password = request.getParameter("password");
 		String email = request.getParameter("email");
+		password = hashPassword(password);
 
 		Gson gson = new Gson();
 		
@@ -66,21 +69,16 @@ public class LoginServlet extends HttpServlet{
 		
 		try {
 			//TODO: change this to your SQL password when testing
-			String encodedPassword = URLEncoder.encode("nR81&U1P1v}E", "UTF-8");
-			String url = "jdbc:mysql://localhost/homework4?user=root&password=" + encodedPassword;
+			String encodedPassword = URLEncoder.encode("root", "UTF-8");
+			String url = "jdbc:mysql://localhost/ProfitPal?user=root&password=" + encodedPassword;
 			conn = DriverManager.getConnection(url);
-			
 			st = conn.createStatement();
 			rs = st.executeQuery("SELECT * FROM ProfitPal.Users WHERE email='" + email + "' AND password='" + password + "'");
-	
-			if(!rs.next()) {
-				//no user with that email either
-				userID = rs.getInt(0);
-			}else {
+			if(rs.next()) {
 				userID = rs.getInt("userID");
 			}
 		}catch(SQLException sqle) {
-			System.out.println("SQLException in registerUser. ");
+			System.out.println("SQLException in LoginServlet. ");
 			sqle.printStackTrace();
 		}finally {
 			try {
@@ -98,5 +96,23 @@ public class LoginServlet extends HttpServlet{
 			}
 		}
 		return userID;
+	}
+	private static String hashPassword(String password) {
+	    try {
+	    	System.out.println("hashing fct reached");
+	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	        byte[] hash = digest.digest(password.getBytes("UTF-8"));
+	        StringBuilder hexString = new StringBuilder();
+	        for (byte b : hash) {
+	            String hex = Integer.toHexString(0xff & b);
+	            if (hex.length() == 1) hexString.append('0');
+	            hexString.append(hex);
+	        }
+	        System.out.println("new password: " + hexString.toString());
+	        return hexString.toString();
+	    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+	        e.printStackTrace();
+	        return null;
+	    }
 	}
 }

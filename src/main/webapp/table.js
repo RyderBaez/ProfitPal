@@ -79,6 +79,16 @@ function updateAndCalculate(button) {
             parentDiv.querySelector("td.restaurantPercentReduction").innerHTML =  json.restaurantChange + "%";
             parentDiv.querySelector("td.shoppingPercentReduction").innerHTML =  json.shoppingChange + "%";
             parentDiv.querySelector("td.gasPercentReduction").innerHTML =  json.gasChange + "%";
+            
+            //Added code
+			var previousTotalSaved = button.parentElement.querySelector('.total-saved');
+			if (previousTotalSaved) {
+				previousTotalSaved.remove();
+			}
+    		var totalSavedDiv = document.createElement('div');
+    		totalSavedDiv.className = 'total-saved';
+    		totalSavedDiv.innerHTML = "Total Saved: $" + json.totalSaved; // Assuming totalSaved is in dollars
+    		button.parentElement.appendChild(totalSavedDiv);
         }
     }
     
