@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -77,6 +81,25 @@ public class ReductionServlet extends HttpServlet {
 	        double monetaryShoppingReduction = Double.parseDouble(String.format("%.2f", (shopping - newShopping)));  
 	        double monetaryGroceryReduction = Double.parseDouble(String.format("%.2f", (grocery - newGrocery)));  
 	        
+	        double totalSaved = monetaryGasReduction + monetaryRestaurantReduction + monetaryShoppingReduction + monetaryGroceryReduction;
+	        Random rand = new Random();
+	        //Change to size of vector
+	        int index = rand.nextInt(3);
+	        //Add in order of price.
+	        Vector<String> stockVec = new Vector<String>();
+	        stockVec.add("PLTR");
+	        stockVec.add("SKYW");
+	        stockVec.add("TSLA");
+	        double price = getStockPrice(stockVec.get(index), gson);
+	        boolean hasEnough = true;
+	        while(price > totalSaved) {
+	        	index--;
+	        	if(index < 0) {
+	        		break;
+	        	}
+	        	price = getStockPrice(stockVec.get(index), gson);
+	        }
+	        
 	        budget.setGas(newGas);
 	        budget.setRestaurant(newRestaurant);
 	        budget.setShopping(newShopping);
@@ -92,6 +115,13 @@ public class ReductionServlet extends HttpServlet {
 	        resultMap.put("groceryChange", groceryChange);
 	        resultMap.put("restaurantChange", restaurantChange);
 	        resultMap.put("shoppingChange", shoppingChange);
+	        resultMap.put("totalSaved", totalSaved);
+	        if(index >= 0) {
+	        	resultMap.put("ticker", stockVec.get(index));
+	        }
+	        else {
+	        	resultMap.put("ticker",  "NONE");
+	        }
 	        
 	        try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
@@ -148,4 +178,14 @@ public class ReductionServlet extends HttpServlet {
 	        response.setContentType("application/json");
             response.getWriter().write(jsonResponse);
     }
+    private static double getStockPrice(String ticker, Gson gson) throws IOException {
+		URL url = new URL(String.format("https://finnhub.io/api/v1/quote?symbol=%s&token=%s", ticker,
+				"cnvouq9r01qmeb8u3pqgcnvouq9r01qmeb8u3pr0"));
+		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		connection.setRequestMethod("GET");
+		BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		String json = in.readLine();
+		StockPrice stockPrice = gson.fromJson(json, StockPrice.class);
+		return stockPrice.getC();
+	}
 }

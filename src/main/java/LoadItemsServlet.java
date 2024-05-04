@@ -58,7 +58,8 @@ public class LoadItemsServlet extends HttpServlet {
 		System.out.println(user);
 		
 		try {
-			String encodedPassword = URLEncoder.encode("nR81&U1P1v}E", "UTF-8");
+			//TODO: change password
+			String encodedPassword = URLEncoder.encode("root", "UTF-8");
 			String url = "jdbc:mysql://localhost/ProfitPal?user=root&password=" + encodedPassword;
 			conn = DriverManager.getConnection(url);
 			

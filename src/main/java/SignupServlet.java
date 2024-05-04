@@ -75,7 +75,7 @@ public class SignupServlet extends HttpServlet{
 		
 		try {
 			//TODO: change this to your SQL password when testing
-			String encodedPassword = URLEncoder.encode("nR81&U1P1v}E", "UTF-8");
+			String encodedPassword = URLEncoder.encode("root", "UTF-8");
 			String url = "jdbc:mysql://localhost/ProfitPal?user=root&password=" + encodedPassword;
 			conn = DriverManager.getConnection(url);
 			
