@@ -7,7 +7,7 @@ USE ProfitPal;
 CREATE TABLE ProfitPal.Users (
   userID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(45) NOT NULL,
-  password VARCHAR(45) NOT NULL
+  password VARCHAR(100) NOT NULL
 );
 
 
