@@ -33,6 +33,28 @@ h1{
   color: inherit; /* Keeps the text color consistent */
 }
 
+.stock-price {
+    font-size: 1.5em;
+    margin: 5px 0;
+}
+
+.price-positive, .change-positive {
+    color: #008000; /* Green color for price increase */
+    font-size: 1.5em;
+}
+
+.price-negative, .change-negative {
+    color: #ff0000; /* Red color for price decrease */
+    font-size: 1.5em;
+}
+
+.time-pos{
+    color: #008000; /* Green color for price increase */
+}
+
+.time-neg {
+    color: #ff0000; /* Red color for price decrease */
+}
 
   .test-container .card{
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -52,6 +74,7 @@ h1{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin-top: 20px;
 }
 
 

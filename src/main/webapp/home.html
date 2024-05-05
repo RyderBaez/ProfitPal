@@ -7,7 +7,7 @@
 <style>
   
 </style>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=1">
 
 </head>
 <body>
@@ -28,13 +28,16 @@
     <div class="test-container">
 	    <!-- Testimonies -->
 	    <div class="test">
-		      <p>Testimony 1</p>
+			<h4>Jordan Peel</h4>
+		      <p>Before using the budget app, I didn't realize how much money I was spending on small, unnecessary purchases. Thanks to the app's insightful expense tracking and budgeting tools, I managed to save $100 extra each month.</p>
 	    </div>
 	    <div class="test">
-	        <p>Testimony 2</p>
+			<h4>Maria Gonzals</h4>
+	        <p>As a freelancer, my income varies, which made it hard to save consistently. The budget app helped me create a flexible budget that adjusts to my fluctuating earnings. I've been able to set aside $50 each month, specifically for investing in stocks.</p>
 	    </div>
 	    <div class="test">
-	        <p>Testimony 3</p>
+			<h4>Elliott Gold</h4>
+	        <p>I've always thought that investing in the stock market was out of my reach, given my tight budget. However, after using this budget app, I realized I could save on my grocery bills and subscription services, which added up to about $75 extra each month.</p>
 	    </div>
     </div> 
     <div class="img-container">
@@ -56,16 +59,20 @@
     <div class="container">
       <!-- Stocks -->
       <div class="card">
-        <img src="img/ticker.png" alt="Stock 1" class="">
-        <span>Stock 1</span>
+        <img src="img/pltr.jpeg" alt="Stock 1" class="">
+		<h4>PLTR</h4>
+		<p id="stock1"></p>
       </div>
       <div class="card">
-        <img src="img/ticker.png" alt="Stock 2" class="">
-        <span>Stock 2</span>
+        <img src="img/tsla.png" alt="Stock 2" class="">
+		<h4>TSLA</h4>
+		<p id="stock2"></p>
       </div>
       <div class="card">
-        <img src="img/ticker.png" alt="Stock 3" class="">
-        <span>Stock 3</span>
+        <img src="img/skyw.jpeg" alt="Stock 3" class="">
+		<h4>SKYWEST</h4>
+		<p id="stock3"></p>
+
       </div>
     </div>
 	      s
@@ -174,6 +181,85 @@ fetch("https://www.googleapis.com/oauth2/v3/userinfo",{
 	};
 	xhr.send(param);
 })*/
+
+</script>
+
+<script>
+const apiKey = 'cno8751r01qu79g53u10cno8751r01qu79g53u1g';
+
+// Function to fetch a stock quote
+async function fetchStockQuote(ticker) {
+    try {
+        const response = await fetch(`https://finnhub.io/api/v1/quote?symbol=${ticker}&token=${apiKey}`);
+        const data = await response.json();
+        if (!data.error) {
+            return data;
+        } else {
+            console.error('Error fetching stock quote:', data.error);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
+}
+
+// Usage example:
+async function displayStockPLTR() {
+    const ticker = 'PLTR';  // Example ticker
+     const stockData = { numStock: 1, price: 181 }; // Example stock data
+    const quoteData = await fetchStockQuote(ticker);
+
+    if (quoteData) {
+        let changeElement = document.getElementById("stock1");
+        const currentPrice = parseFloat(quoteData.c).toFixed(2);
+        const marketValue = (stockData.numStock * currentPrice).toFixed(2); // Compute market value
+        const priceChange = parseFloat(quoteData.c) - stockData.price;
+        const dp = parseFloat(quoteData.dp).toFixed(2);
+
+        changeElement.textContent = `${currentPrice} \n ${priceChange > 0 ? `▼${dp}` : `▲${dp}`}`;
+        changeElement.classList.add(priceChange >= 0 ? 'time-pos' : 'time-neg');
+    }
+}
+
+async function displayStockTSLA() {
+    const ticker = 'TSLA';  // Example ticker
+     const stockData = { numStock: 1, price: 181 }; // Example stock data
+    const quoteData = await fetchStockQuote(ticker);
+
+    if (quoteData) {
+        let changeElement = document.getElementById("stock2");
+        const currentPrice = parseFloat(quoteData.c).toFixed(2);
+        const marketValue = (stockData.numStock * currentPrice).toFixed(2); // Compute market value
+        const priceChange = parseFloat(quoteData.c) - stockData.price;
+        const dp = parseFloat(quoteData.dp).toFixed(2);
+
+        changeElement.textContent = `${currentPrice} \n ${priceChange > 0 ? `▼${dp}` : `▲${dp}`}`;
+        changeElement.classList.add(priceChange >= 0 ? 'time-pos' : 'time-neg');
+    }
+}
+
+async function displayStockSKYW() {
+    const ticker = 'SKYW';  // Example ticker
+     const stockData = { numStock: 1, price: 181 }; // Example stock data
+    const quoteData = await fetchStockQuote(ticker);
+
+    if (quoteData) {
+        let changeElement = document.getElementById("stock3");
+        const currentPrice = parseFloat(quoteData.c).toFixed(2);
+        const marketValue = (stockData.numStock * currentPrice).toFixed(2); // Compute market value
+        const priceChange = parseFloat(quoteData.c) - stockData.price;
+        const dp = parseFloat(quoteData.dp).toFixed(2);
+
+        changeElement.textContent = `${currentPrice} \n ${priceChange > 0 ? `▲${dp}` : `▼${dp}`}`;
+        changeElement.classList.add(priceChange >= 0 ? 'time-pos' : 'time-neg');
+    }
+}
+
+displayStockPLTR();
+displayStockTSLA();
+displayStockSKYW();
+
 
 </script>
       </body>
