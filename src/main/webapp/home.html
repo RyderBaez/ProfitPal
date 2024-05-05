@@ -29,15 +29,15 @@
 	    <!-- Testimonies -->
 	    <div class="test">
 			<h4>Jordan Peel</h4>
-		      <p>Before using the budget app, I didn't realize how much money I was spending on small, unnecessary purchases. Thanks to the app's insightful expense tracking and budgeting tools, I managed to save $100 extra each month.</p>
+		      <p id="test1"></p>
 	    </div>
 	    <div class="test">
 			<h4>Maria Gonzals</h4>
-	        <p>As a freelancer, my income varies, which made it hard to save consistently. The budget app helped me create a flexible budget that adjusts to my fluctuating earnings. I've been able to set aside $50 each month, specifically for investing in stocks.</p>
+	        <p id="test2"></p>
 	    </div>
 	    <div class="test">
 			<h4>Elliott Gold</h4>
-	        <p>I've always thought that investing in the stock market was out of my reach, given my tight budget. However, after using this budget app, I realized I could save on my grocery bills and subscription services, which added up to about $75 extra each month.</p>
+	        <p id="test3"></p>
 	    </div>
     </div> 
     <div class="img-container">
@@ -260,6 +260,27 @@ displayStockPLTR();
 displayStockTSLA();
 displayStockSKYW();
 
+
+</script>
+<script>
+let test = [];
+test.push("Before using the budget app, I didn't realize how much money I was spending on small, unnecessary purchases. Thanks to the app's insightful expense tracking and budgeting tools, I managed to save $100 extra each month.");
+test.push("As a freelancer, my income varies, which made it hard to save consistently. The budget app helped me create a flexible budget that adjusts to my fluctuating earnings. I've been able to set aside $50 each month, specifically for investing in stocks.");
+test.push("I've always thought that investing in the stock market was out of my reach, given my tight budget. However, after using this budget app, I realized I could save on my grocery bills and subscription services, which added up to about $75 extra each month.");
+
+function fillTests(test){
+	let changeElement = document.getElementById("test1");
+	changeElement.textContent = test.pop();
+	
+	changeElement = document.getElementById("test2");
+	changeElement.textContent = test.pop();
+	
+	changeElement = document.getElementById("test3");
+	changeElement.textContent = test.pop();
+	
+	
+	
+}
 
 </script>
       </body>
